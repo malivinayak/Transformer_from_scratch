@@ -20,3 +20,6 @@ class PositionalEncoding(nn.Module):
         self.d_model = d_model
         self.seq_len = seq_len
         self.dropout = nn.Dropout(dropout)
+
+        # postional_encoding - create a matrix of shape (seq_len, d_model)
+        pe = torch.zeros(seq_len, d_model)
