@@ -32,3 +32,5 @@ class PositionalEncoding(nn.Module):
         pe[:,1::2] = torch.cos(position * div_term)
 
         pe = pe.unsqueeze(0) # shape became (1, seq_len, d_model)
+
+        self.register_buffer('pe', pe)
