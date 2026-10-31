@@ -24,4 +24,4 @@ class PositionalEncoding(nn.Module):
         # positional_encoding - create a matrix of shape (seq_len, d_model)
         pe = torch.zeros(seq_len, d_model)
         # create a vector of shape (seq_len, 1)
-        position = torch.arange(0, seq_len, dtype=torch.float).unsqueeze(1)
+        position = torch.arange(0, seq_len, dtype=torch.float).unsqueeze(1) # -> numerator
