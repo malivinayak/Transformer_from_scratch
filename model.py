@@ -34,3 +34,6 @@ class PositionalEncoding(nn.Module):
         pe = pe.unsqueeze(0) # shape became (1, seq_len, d_model)
 
         self.register_buffer('pe', pe)
+
+    def forwad(self, x):
+        x = x + (self.pe[:, :x.shape[1], :]).requires_grad_(False)
