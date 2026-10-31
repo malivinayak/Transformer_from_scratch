@@ -25,7 +25,7 @@ class PositionalEncoding(nn.Module):
         pe = torch.zeros(seq_len, d_model)
         # create a vector of shape (seq_len, 1)
         position = torch.arange(0, seq_len, dtype=torch.float).unsqueeze(1) # -> numerator
-        div_term = torch.exp(torch.arange(0, d_model, 2).float * (-math.log(10000.0)/d_model)) # denominator 
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0)/d_model)) # denominator 
         # Apply the sin to even position
         pe[:,0::2] = torch.sin(position * div_term)
         # Apply the cos to odd position
@@ -35,5 +35,5 @@ class PositionalEncoding(nn.Module):
 
         self.register_buffer('pe', pe)
 
-    def forwad(self, x):
+    def forward(self, x):
         x = x + (self.pe[:, :x.shape[1], :]).requires_grad_(False)
