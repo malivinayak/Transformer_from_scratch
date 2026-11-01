@@ -120,5 +120,5 @@ class ResidualConnection(nn.Module):
         self.dropout = nn.Dropout(dropout)
         self.norm = LayerNormalization()
 
-    def forward(self, x, sublayer):
+    def forward(self, x: torch.Tensor, sublayer: nn.Module):
         return x + self.dropout(sublayer(self.norm(x)))
