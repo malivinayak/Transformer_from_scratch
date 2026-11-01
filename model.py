@@ -242,4 +242,8 @@ def builder_function(src_vocab_size: int, tgt_vocab_size: int, src_seq_len: int,
 
     # create projection layer
     projection_layer = ProjectionLayer(d_model, tgt_vocab_size)
+
+    # create transformer
+    transformer = Transformer(encoder, decoder, src_embed, tgt_embed, src_pos, tgt_pos, projection_layer)
+
     
