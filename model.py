@@ -215,4 +215,7 @@ def builder_function(src_vocab_size: int, tgt_Vocab_size: int, src_seq_len: int,
     src_embed = InputEmbeddings(d_model, src_vocab_size)
     tgt_embed = InputEmbeddings(d_model, tgt_Vocab_size)
 
-    
+    # create positional encoding layer
+    src_pos = PositionalEncoding(d_model, src_seq_len, dropout)
+    tgt_pos = PositionalEncoding(d_model, tgt_seq_len, dropout)
+
