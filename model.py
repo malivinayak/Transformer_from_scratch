@@ -219,3 +219,10 @@ def builder_function(src_vocab_size: int, tgt_Vocab_size: int, src_seq_len: int,
     src_pos = PositionalEncoding(d_model, src_seq_len, dropout)
     tgt_pos = PositionalEncoding(d_model, tgt_seq_len, dropout)
 
+    # create the encoder block
+    encoder_blocks =[]
+    for _ in range(N):
+        encoder_self_attention_block = MultiHeadAttentionBlock(d_model, h, dropout)
+        feed_forward_block = FeedForwardBlock(d_model, d_ff, dropout)
+        encoder_block = EncoderBlock(encoder_self_attention_block, feed_forward_block, dropout)
+        encoder_blocks.append(encoder_block)
