@@ -210,10 +210,10 @@ class Transformer(nn.Module):
     def Project(self, x):
         return self.projection_layer(x)
 
-def builder_function(src_vocab_size: int, tgt_Vocab_size: int, src_seq_len: int, tgt_seq_len: int, d_model: int = 512, N: int = 6, h: int = 8, dropout: float = 0.1, d_ff: int = 2028) -> Transformer:
+def builder_function(src_vocab_size: int, tgt_vocab_size: int, src_seq_len: int, tgt_seq_len: int, d_model: int = 512, N: int = 6, h: int = 8, dropout: float = 0.1, d_ff: int = 2028) -> Transformer:
     # create embeddign layer
     src_embed = InputEmbeddings(d_model, src_vocab_size)
-    tgt_embed = InputEmbeddings(d_model, tgt_Vocab_size)
+    tgt_embed = InputEmbeddings(d_model, tgt_vocab_size)
 
     # create positional encoding layer
     src_pos = PositionalEncoding(d_model, src_seq_len, dropout)
@@ -239,3 +239,7 @@ def builder_function(src_vocab_size: int, tgt_Vocab_size: int, src_seq_len: int,
     # create the encder and decoder block
     encoder = Encoder(nn.ModuleList(encoder_blocks))
     decoder = Encoder(nn.ModuleList(decoder_block))
+
+    # create projection layer
+    projection_layer = ProjectionLayer(d_model, tgt_vocab_size)
+    
