@@ -235,4 +235,7 @@ def builder_function(src_vocab_size: int, tgt_Vocab_size: int, src_seq_len: int,
         decoedr_feed_forward_block = FeedForwardBlock(d_model, d_ff, dropout)
         decoder_block = DecoderBlock(decoder_self_attention_block, decoder_cross_attention_block, decoedr_feed_forward_block, dropout)
         decoder_blocks.append(decoder_block)
-    
+
+    # create the encder and decoder block
+    encoder = Encoder(nn.ModuleList(encoder_blocks))
+    decoder = Encoder(nn.ModuleList(decoder_block))
