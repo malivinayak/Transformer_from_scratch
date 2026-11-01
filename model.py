@@ -226,3 +226,13 @@ def builder_function(src_vocab_size: int, tgt_Vocab_size: int, src_seq_len: int,
         feed_forward_block = FeedForwardBlock(d_model, d_ff, dropout)
         encoder_block = EncoderBlock(encoder_self_attention_block, feed_forward_block, dropout)
         encoder_blocks.append(encoder_block)
+
+    # create the decoder block
+    decoder_blocks = []
+    for _ in range(N):
+        decoder_self_attention_block = MultiHeadAttentionBlock(d_model, h, dropout)
+        decoder_cross_attention_block = MultiHeadAttentionBlock(d_model, h, dropout)
+        decoedr_feed_forward_block = FeedForwardBlock(d_model, d_ff, dropout)
+        decoder_block = DecoderBlock(decoder_self_attention_block, decoder_cross_attention_block, decoedr_feed_forward_block, dropout)
+        decoder_blocks.append(decoder_block)
+    
