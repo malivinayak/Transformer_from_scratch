@@ -210,8 +210,8 @@ class Transformer(nn.Module):
     def Project(self, x):
         return self.projection_layer(x)
 
-def builder_function(src_vocab_size: int, tgt_vocab_size: int, src_seq_len: int, tgt_seq_len: int, d_model: int = 512, N: int = 6, h: int = 8, dropout: float = 0.1, d_ff: int = 2028) -> Transformer:
-    # create embeddign layer
+def builder_function(src_vocab_size: int, tgt_vocab_size: int, src_seq_len: int, tgt_seq_len: int, d_model: int = 512, N: int = 6, h: int = 8, dropout: float = 0.1, d_ff: int = 2048) -> Transformer:
+    # create embedding layer
     src_embed = InputEmbeddings(d_model, src_vocab_size)
     tgt_embed = InputEmbeddings(d_model, tgt_vocab_size)
 
@@ -232,13 +232,13 @@ def builder_function(src_vocab_size: int, tgt_vocab_size: int, src_seq_len: int,
     for _ in range(N):
         decoder_self_attention_block = MultiHeadAttentionBlock(d_model, h, dropout)
         decoder_cross_attention_block = MultiHeadAttentionBlock(d_model, h, dropout)
-        decoedr_feed_forward_block = FeedForwardBlock(d_model, d_ff, dropout)
-        decoder_block = DecoderBlock(decoder_self_attention_block, decoder_cross_attention_block, decoedr_feed_forward_block, dropout)
+        decoder_feed_forward_block = FeedForwardBlock(d_model, d_ff, dropout)
+        decoder_block = DecoderBlock(decoder_self_attention_block, decoder_cross_attention_block, decoder_feed_forward_block, dropout)
         decoder_blocks.append(decoder_block)
 
-    # create the encder and decoder block
+    # create the encoder and decoder block
     encoder = Encoder(nn.ModuleList(encoder_blocks))
-    decoder = Encoder(nn.ModuleList(decoder_block))
+    decoder = Decoder(nn.ModuleList(decoder_block))
 
     # create projection layer
     projection_layer = ProjectionLayer(d_model, tgt_vocab_size)
@@ -248,7 +248,7 @@ def builder_function(src_vocab_size: int, tgt_vocab_size: int, src_seq_len: int,
 
     # Initialize the parameters
     for p in transformer.parameters():
-        if p.dim > 1:
+        if p.dim() > 1:
             nn.init.xavier_uniform_(p)
 
     return transformer
