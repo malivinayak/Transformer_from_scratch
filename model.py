@@ -238,7 +238,7 @@ def builder_function(src_vocab_size: int, tgt_vocab_size: int, src_seq_len: int,
 
     # create the encoder and decoder block
     encoder = Encoder(nn.ModuleList(encoder_blocks))
-    decoder = Decoder(nn.ModuleList(decoder_block))
+    decoder = Decoder(nn.ModuleList(decoder_blocks))
 
     # create projection layer
     projection_layer = ProjectionLayer(d_model, tgt_vocab_size)
